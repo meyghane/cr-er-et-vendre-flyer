@@ -1,0 +1,2176 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTES DE COURS — LIVE DE JAMEL | Groupe Focus</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #1f1f35;
+            --accent-purple: #8b5cf6;
+            --accent-purple-light: #a78bfa;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-pink: #ec4899;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(139, 92, 246, 0.15);
+            --glow-purple: rgba(139, 92, 246, 0.4);
+            --glow-blue: rgba(59, 130, 246, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-orb-1 {
+            width: 600px; height: 600px;
+            background: var(--accent-purple);
+            top: -200px; right: -200px;
+        }
+
+        .bg-orb-2 {
+            width: 500px; height: 500px;
+            background: var(--accent-blue);
+            bottom: -150px; left: -150px;
+            animation-delay: -10s;
+        }
+
+        .bg-orb-3 {
+            width: 400px; height: 400px;
+            background: var(--accent-cyan);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+            opacity: 0.08;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 10px) scale(1.02); }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-purple-light);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .hero-badge .pulse {
+            width: 8px; height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease 0.1s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        /* GOKU DEDICACE */
+        .goku-dedicace {
+            position: relative;
+            margin: 2rem auto 3rem;
+            max-width: 750px;
+            padding: 2rem 2.5rem;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(59, 130, 246, 0.08));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .goku-dedicace::before {
+            content: '🔥';
+            position: absolute;
+            top: -18px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            background: var(--bg-primary);
+            padding: 0 0.8rem;
+        }
+
+        .goku-dedicace .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-purple-light);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .goku-dedicace blockquote {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 700;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+
+        .goku-dedicace .author {
+            margin-top: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* STATS ROW */
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem 6rem;
+        }
+
+        /* ===== SECTION ===== */
+        .section {
+            margin-bottom: 5rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px; height: 48px;
+            min-width: 48px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(139, 92, 246, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(139, 92, 246, 0.08);
+        }
+
+        .card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-purple-light);
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* ===== TLDR BOX ===== */
+        .tldr-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.08));
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tldr-box h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tldr-item {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .tldr-item .icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* ===== PROCESS STEPS ===== */
+        .step {
+            position: relative;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px; height: 100%;
+            background: linear-gradient(180deg, var(--accent-purple), var(--accent-cyan));
+            border-radius: 4px 0 0 4px;
+        }
+
+        .step-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 1rem;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-purple-light);
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step p, .step li {
+            color: var(--text-secondary);
+        }
+
+        .step ol, .step ul {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .step li {
+            margin-bottom: 0.6rem;
+        }
+
+        .step .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1rem;
+            padding: 0.3rem 0.8rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+        }
+
+        /* ===== CODE BLOCK ===== */
+        .code-block {
+            background: #0d1117;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.2rem 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: #c9d1d9;
+        }
+
+        .code-block .key { color: #79c0ff; }
+        .code-block .str { color: #a5d6ff; }
+        .code-block .bracket { color: #8b949e; }
+
+        /* ===== QUOTE ===== */
+        .quote {
+            position: relative;
+            padding: 1.5rem 1.5rem 1.5rem 2rem;
+            margin: 1.2rem 0;
+            background: rgba(139, 92, 246, 0.06);
+            border-left: 3px solid var(--accent-purple);
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .quote .author {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: normal;
+            font-weight: 600;
+            color: var(--accent-purple-light);
+            font-size: 0.85rem;
+        }
+
+        /* ===== ALERT BOXES ===== */
+        .alert {
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.2rem 0;
+            font-size: 0.95rem;
+        }
+
+        .alert-warning {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: #fbbf24;
+        }
+
+        .alert-tip {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            color: #34d399;
+        }
+
+        .alert-fire {
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            color: #f87171;
+        }
+
+        .alert strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ===== PRICING TABLE ===== */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pricing-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .pricing-item:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .pricing-item .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--accent-green);
+            white-space: nowrap;
+            min-width: 90px;
+        }
+
+        .pricing-item .info h4 {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .pricing-item .info p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* ===== DESIGN RULES ===== */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .rule-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .rule-card:hover {
+            border-color: rgba(139, 92, 246, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .rule-card .rule-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .rule-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .rule-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ===== TOOLS TABLE ===== */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .tool-card:hover {
+            border-color: rgba(139, 92, 246, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .tool-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .tool-card a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .tool-card a:hover {
+            text-decoration: underline;
+        }
+
+        .tool-card .tool-price {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 6px;
+            font-size: 0.78rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .tool-card .tool-desc {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PROSPECTION CHANNELS ===== */
+        .channel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .channel h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .channel p, .channel li {
+            color: var(--text-secondary);
+        }
+
+        .channel-tag {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            background: rgba(139, 92, 246, 0.15);
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--accent-purple-light);
+        }
+
+        /* ===== CHECKLIST ===== */
+        .checklist-group {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .checklist-group h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.06);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-box {
+            width: 22px; height: 22px;
+            min-width: 22px;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            border-radius: 6px;
+            margin-top: 2px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-box:hover {
+            border-color: var(--accent-purple);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .check-box.checked {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
+
+        .check-box.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .check-box.checked + span {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        /* ===== SALES FUNNEL ===== */
+        .funnel {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .funnel-step .phase {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; height: 40px;
+            min-width: 40px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .funnel-step h4 {
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+            font-size: 0.95rem;
+        }
+
+        .funnel-step p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ===== NICHE TAGS ===== */
+        .niche-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 1rem 0;
+        }
+
+        .niche-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .niche-tag:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.4);
+            color: var(--text-primary);
+        }
+
+        /* ===== KEY FIGURES ===== */
+        .figures-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .figure-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .figure-card .fig-value {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .figure-card .fig-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== FAQ ===== */
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-q {
+            padding: 1.2rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.2s ease;
+        }
+
+        .faq-q:hover {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .faq-q .arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+            color: var(--accent-purple-light);
+        }
+
+        .faq-item.open .faq-q .arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+        }
+
+        .faq-item.open .faq-a {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-a p {
+            color: var(--text-secondary);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { padding: 6rem 1.5rem 3rem; }
+            .content { padding: 0 1rem 4rem; }
+            .pricing-grid, .tools-grid, .rules-grid, .figures-grid {
+                grid-template-columns: 1fr;
+            }
+            .step, .card, .channel, .checklist-group {
+                padding: 1.5rem;
+            }
+            .hero-stats { gap: 1.5rem; }
+            .goku-dedicace { padding: 1.5rem; }
+        }
+
+        /* ===== SMOOTH REVEAL ANIMATION ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== 3-OFFER STRATEGY ===== */
+        .offers-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .offer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .offer-card.featured {
+            border-color: var(--accent-purple);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), var(--bg-card));
+        }
+
+        .offer-card.featured::before {
+            content: '⭐ RECOMMANDÉ';
+            position: absolute;
+            top: -12px; left: 50%;
+            transform: translateX(-50%);
+            padding: 0.2rem 0.8rem;
+            background: var(--accent-purple);
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .offer-card h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+        }
+
+        .offer-card .offer-price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .offer-card .offer-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BG EFFECTS -->
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="nav-logo">📋 Notes — Live Jamel</div>
+            <ul class="nav-links">
+                <li><a href="#process">Process</a></li>
+                <li><a href="#rules">Design</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#tools">Outils</a></li>
+                <li><a href="#prospection">Prospection</a></li>
+                <li><a href="#vente">Vente</a></li>
+                <li><a href="#nfc">NFC</a></li>
+                <li><a href="#mindset">Mindset</a></li>
+                <li><a href="#checklist">Checklist</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-badge">
+            <span class="pulse"></span>
+            Live Coaching — Groupe Focus
+        </div>
+
+        <h1>
+            Créer ton agence SMMA,<br>
+            <span class="gradient-text">générer des flyers pro avec l'IA</span><br>
+            et vendre tes services dès demain
+        </h1>
+
+        <p class="hero-subtitle">
+            Notes de cours complètes du live de <strong>Jamel</strong> — De la création de flyers professionnels avec l'IA à la vente de services digitaux, en passant par la prospection terrain et en ligne.
+        </p>
+
+        <!-- GOKU DEDICACE -->
+        <div class="goku-dedicace">
+            <div class="label">🎯 Spéciale dédicace à Goku</div>
+            <blockquote>« Au début, on ne va pas être à l'aise, c'est normal. »</blockquote>
+            <div class="author">— Jamel</div>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="number">~0,20€</div>
+                <div class="label">Coût par flyer IA</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">30-200€</div>
+                <div class="label">Prix de vente</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">2-5 min</div>
+                <div class="label">Temps de création</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">15+</div>
+                <div class="label">Services à vendre</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <!-- ==================== SECTION 1 : INTRO ==================== -->
+        <section class="section reveal" id="intro">
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h2 class="section-title">Introduction & Contexte</h2>
+            </div>
+
+            <div class="card">
+                <h3>Qui parle ?</h3>
+                <p><strong>Jamel</strong> — formateur, entrepreneur, fondateur du groupe privé <strong>Focus</strong> (abonnement à 10€/mois). Il accompagne une communauté de membres dans le lancement d'agences SMMA.</p>
+            </div>
+
+            <div class="card">
+                <h3>À qui ça s'adresse ?</h3>
+                <p>Débutants complets, personnes qui veulent lancer une activité de prestation de services digitaux, même sans compétences en design, même sans budget.</p>
+            </div>
+
+            <div class="card">
+                <h3>Objectif du live</h3>
+                <p>Que chaque participant reparte avec son propre flyer d'agence, une liste de services à vendre, des techniques de prospection concrètes, et qu'il fasse ses premières ventes dès le lendemain. Durée : environ 2h30-3h.</p>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 2 : TLDR ==================== -->
+        <section class="section reveal">
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h2 class="section-title">Résumé Exécutif (TL;DR)</h2>
+            </div>
+
+            <div class="tldr-box">
+                <h3>⚡ L'essentiel en 30 secondes</h3>
+
+                <div class="tldr-item">
+                    <span class="icon">🎨</span>
+                    <span>Tu peux créer un <strong>flyer professionnel en 2-5 minutes</strong> grâce à une combinaison d'outils IA (Claude/Perplexity pour le prompt JSON + NanoBanana/Gemini pour la génération d'image), le tout pour <strong>environ 20 centimes par flyer</strong>.</span>
+                </div>
+
+                <div class="tldr-item">
+                    <span class="icon">💰</span>
+                    <span>Ton agence SMMA peut proposer des <strong>services variés</strong> : flyers (30-200€), sites web (300€), cartes NFC (30-50€), QR codes, Google My Business (50-200€), menus, packaging, etc.</span>
+                </div>
+
+                <div class="tldr-item">
+                    <span class="icon">🎯</span>
+                    <span>La <strong>prospection</strong> est le nerf de la guerre : Snapchat stories, groupes Facebook, DM Instagram, démarchage physique, scrapping Google Maps.</span>
+                </div>
+
+                <div class="tldr-item">
+                    <span class="icon">🚀</span>
+                    <span><strong>Action immédiate :</strong> Ce soir, créer ton flyer + story + technique du message en 2 temps. Demain, prospection terrain.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 3 : CONCEPTS ==================== -->
+        <section class="section reveal">
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h2 class="section-title">Concepts Clés & Définitions</h2>
+            </div>
+
+            <div class="card">
+                <h3>SMMA</h3>
+                <p><strong>Social Media Marketing Agency.</strong> Agence qui vend des services digitaux : design, création de flyers, sites web, gestion de publicités, référencement, etc. C'est de la prestation de service.</p>
+            </div>
+
+            <div class="card">
+                <h3>NanoBanana / NanoBanana Pro</h3>
+                <p>Un outil/modèle de génération d'images via <strong>Gemini</strong> (l'IA de Google). Tu lui envoies un prompt structuré en JSON + une image de référence, et il te génère un visuel professionnel.</p>
+            </div>
+
+            <div class="card">
+                <h3>Prompt JSON</h3>
+                <p>Un texte structuré dans un format technique (JSON) qui décrit précisément ce que tu veux que l'IA génère : les couleurs, la composition, la typographie, le style. C'est comme une <strong>commande ultra-détaillée</strong> que l'IA comprend parfaitement.</p>
+            </div>
+
+            <div class="card">
+                <h3>DA (Direction Artistique)</h3>
+                <p>Le style visuel global d'un design : les couleurs, les polices, l'ambiance, la mise en page. Quand Jamel dit "je veux la même DA", ça veut dire "je veux le même style visuel".</p>
+            </div>
+
+            <div class="card">
+                <h3>Designi</h3>
+                <p>Un site brésilien (<a href="https://www.designi.com.br" style="color: var(--accent-cyan);">designi.com.br</a>) qui propose des templates de design ultra-professionnels pour environ 2-3€/mois.</p>
+                <div class="quote">
+                    « C'est la Lamborghini des sites en termes de design. Vous êtes sûr de faire de la frappe atomique. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Autres termes importants</h3>
+                <p><strong>Scrapping</strong> — Extraire automatiquement des données depuis des sites web (ex : récupérer tous les restaurants d'une ville sur Google Maps). <strong>Watermark / Filigrane</strong> — Logo ou texte semi-transparent sur les images. <strong>Maquette / Mockup</strong> — Mise en scène réaliste d'un visuel. <strong>Format 9:16</strong> — Format vertical (stories Snap/Insta). <strong>Lead</strong> — Prospect, client potentiel. <strong>Prix d'appel</strong> — Service pas cher pour accrocher le client. <strong>Upscale</strong> — Augmenter la résolution d'une image. <strong>Couleurs complémentaires</strong> — Max 3 couleurs par design (violet/jaune, orange/bleu, vert/rouge).</p>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 4 : PROCESS ==================== -->
+        <section class="section reveal" id="process">
+            <div class="section-header">
+                <div class="section-number">4</div>
+                <h2 class="section-title">Le Process Complet — Créer un Flyer Pro avec l'IA</h2>
+            </div>
+
+            <!-- STEP 1 -->
+            <div class="step">
+                <div class="step-badge">Étape 1</div>
+                <h3>Créer ton identité d'agence</h3>
+                <p>Choisis un nom pour ton agence. Le nom doit être simple et rapide à retenir. Tu n'as pas besoin de passer des heures dessus — l'important c'est de commencer.</p>
+                <div class="alert alert-tip">
+                    <strong>💡 ASTUCE PRO</strong>
+                    Ne te bloque pas sur le nom. Ce qui compte c'est de passer à l'action. Tu pourras toujours le changer plus tard.
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="step">
+                <div class="step-badge">Étape 2</div>
+                <h3>Trouver une image de référence (la DA)</h3>
+                <p>Va sur <strong>Designi</strong> (<a href="https://www.designi.com.br" style="color: var(--accent-cyan);">designi.com.br</a>).</p>
+                <ol>
+                    <li>Crée un compte sur Designi (~2-3€/mois)</li>
+                    <li>Tape un mot-clé lié à ce que tu veux créer (ex : "marketing", "flyer", "gym", "pizza")</li>
+                    <li>Les mots-clés fonctionnent mieux en <strong>portugais brésilien</strong> ou en <strong>anglais</strong></li>
+                    <li>Parcours les templates et trouve un design qui te plaît — c'est ton image de référence</li>
+                    <li>Copie l'image (clic droit → copier l'image)</li>
+                </ol>
+                <div class="alert alert-warning">
+                    <strong>⚠️ ATTENTION</strong>
+                    Tu ne vas PAS télécharger et utiliser le template directement. Tu vas t'en servir uniquement comme référence de style (DA) pour que l'IA s'en inspire.
+                </div>
+                <div class="quote">
+                    « Baladez-vous sur le site. Faut pas que ça prenne trop de temps les gars. L'objectif c'est de faire des sous. »
+                    <span class="author">— Jamel</span>
+                </div>
+                <div class="time-badge">⏱ Temps estimé : 2-5 minutes</div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step">
+                <div class="step-badge">Étape 3</div>
+                <h3>Générer le prompt JSON avec une IA textuelle</h3>
+                <p>Va sur <strong>Claude</strong>, Perplexity ou ChatGPT.</p>
+                <ol>
+                    <li>Ouvre Claude (ou Perplexity, ou une autre IA)</li>
+                    <li>Envoie-lui l'image de référence trouvée sur Designi</li>
+                    <li>Écris un message comme celui-ci (adapte avec tes infos) :</li>
+                </ol>
+
+                <div class="code-block">
+Fais-moi un prompt en JSON pour NanoBanana. Ne génère pas l'image.
+J'ai une agence marketing qui s'appelle [TON NOM D'AGENCE].
+Je vends des sites à [PRIX] euros et des flyers à [PRIX] euros,
+et d'autres services comme [LISTE TES SERVICES].
+Je veux un flyer pour vendre mes services, inspiré de cette image.
+Je veux la même DA, mais je veux un flyer hyper structuré, jeune,
+énergique et dans ces couleurs qui donne envie d'acheter.
+Mets mon Snapchat [TON SNAP] et mon WhatsApp [TON NUMÉRO].
+Fais-moi uniquement le prompt en JSON.
+Utilise l'image de référence que je t'envoie, il faut que tu
+récupères la DA et que tu améliores pour que ce soit un vrai
+flyer Snapchat.
+                </div>
+
+                <p style="margin-top: 1rem;">Envoie aussi la <strong>structure de prompt JSON</strong> ci-dessous — tu la copies-colles avec ton message :</p>
+
+                <div class="code-block">
+<span class="bracket">{</span>
+  <span class="key">"lighting"</span>: <span class="bracket">{</span> <span class="key">"source"</span>: <span class="str">""</span>, <span class="key">"shadows"</span>: <span class="str">""</span>, <span class="key">"direction"</span>: <span class="str">""</span>, <span class="key">"intensity"</span>: <span class="str">""</span> <span class="bracket">}</span>,
+  <span class="key">"background"</span>: <span class="bracket">{</span> <span class="key">"depth"</span>: <span class="str">""</span>, <span class="key">"setting"</span>: <span class="str">""</span>, <span class="key">"elements"</span>: <span class="bracket">[]</span> <span class="bracket">}</span>,
+  <span class="key">"typography"</span>: <span class="bracket">{</span> <span class="key">"placement"</span>: <span class="str">""</span>, <span class="key">"font_color"</span>: <span class="str">""</span>, <span class="key">"font_style"</span>: <span class="str">""</span>, <span class="key">"text_content"</span>: <span class="str">""</span> <span class="bracket">}</span>,
+  <span class="key">"composition"</span>: <span class="bracket">{</span> <span class="key">"focus"</span>: <span class="str">""</span>, <span class="key">"framing"</span>: <span class="str">""</span>, <span class="key">"shot_type"</span>: <span class="str">""</span>, <span class="key">"camera_angle"</span>: <span class="str">""</span> <span class="bracket">}</span>,
+  <span class="key">"color_profile"</span>: <span class="bracket">{</span> <span class="key">"mood"</span>: <span class="str">""</span>, <span class="key">"accent_colors"</span>: <span class="bracket">{}</span>, <span class="key">"color_palette"</span>: <span class="str">""</span>, <span class="key">"dominant_colors"</span>: <span class="bracket">{}</span> <span class="bracket">}</span>,
+  <span class="key">"technical_specs"</span>: <span class="bracket">{</span> <span class="key">"medium"</span>: <span class="str">""</span>, <span class="key">"resolution"</span>: <span class="str">""</span>, <span class="key">"camera_type"</span>: <span class="str">""</span>, <span class="key">"aspect_ratio"</span>: <span class="str">""</span> <span class="bracket">}</span>,
+  <span class="key">"subject_analysis"</span>: <span class="bracket">{}</span>,
+  <span class="key">"artistic_elements"</span>: <span class="bracket">{</span> <span class="key">"style"</span>: <span class="str">""</span>, <span class="key">"texture"</span>: <span class="str">""</span>, <span class="key">"contrast"</span>: <span class="str">""</span> <span class="bracket">}</span>,
+  <span class="key">"generation_parameters"</span>: <span class="bracket">{</span> <span class="key">"prompt"</span>: <span class="str">""</span>, <span class="key">"negative_prompt"</span>: <span class="str">""</span> <span class="bracket">}</span>
+<span class="bracket">}</span>
+                </div>
+
+                <p style="margin-top: 1rem;">L'IA va analyser ton image de référence et remplir toute cette structure avec les bonnes informations, en l'adaptant à ton agence et tes services.</p>
+                <div class="time-badge">⏱ Temps estimé : 3-5 minutes</div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="step">
+                <div class="step-badge">Étape 4</div>
+                <h3>Générer le flyer sur NanoBanana (Gemini)</h3>
+                <p>Va sur <strong>Gemini</strong> (avec NanoBanana Pro) ou sur <strong>Lovart</strong>.</p>
+                <ol>
+                    <li>Ouvre Gemini (ou l'outil compatible NanoBanana Pro)</li>
+                    <li>Colle le prompt JSON que Claude/Perplexity t'a généré à l'étape 3</li>
+                    <li>Envoie aussi <strong>l'image de référence</strong> (celle de Designi) — c'est crucial</li>
+                    <li>Si tu as un logo, envoie-le aussi</li>
+                    <li>Génère — le résultat arrive en quelques secondes</li>
+                </ol>
+
+                <div class="quote">
+                    « Hop, mon image elle est incroyable. Déjà ce qu'il a généré en trois secondes, j'ai eu un flyer de ouf. »
+                    <span class="author">— Jamel</span>
+                </div>
+
+                <div class="alert alert-fire">
+                    <strong>🔥 CRUCIAL</strong>
+                    Il faut TOUJOURS envoyer l'image de référence avec le prompt. Sans elle, l'IA n'a pas le style visuel à suivre et le résultat sera chaotique. « Toujours, toujours. »
+                </div>
+                <div class="time-badge">⏱ Temps estimé : 1-3 minutes</div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div class="step">
+                <div class="step-badge">Étape 5</div>
+                <h3>Ajuster et améliorer le résultat</h3>
+                <p>C'est là que le travail d'affinement commence. Le premier résultat ne sera jamais parfait du premier coup. Reste dans la même conversation et demande des corrections :</p>
+                <ul>
+                    <li><strong>« Enlève les watermarks/filigranes »</strong> — Souvent la première chose à faire</li>
+                    <li><strong>« Augmente la taille des textes »</strong> — Les écritures sont souvent trop petites</li>
+                    <li><strong>« Change la police »</strong> — Demande une police plus "fun", plus énergique</li>
+                    <li><strong>« Mets le logo en haut »</strong> — Envoie ton vrai logo</li>
+                    <li><strong>« Mets le format en 9:16 »</strong> — Format vertical pour stories</li>
+                    <li><strong>« Réduis le nombre de couleurs »</strong> — Maximum 3 couleurs</li>
+                    <li><strong>« Mets des prix à la place des phrases »</strong> — On épure</li>
+                </ul>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ ATTENTION</strong>
+                    Quand tu demandes une modif, l'IA peut changer d'autres éléments. Précise « ne change rien d'autre » ou « garde tout le reste identique ».
+                </div>
+
+                <div class="quote">
+                    « C'est que de l'ajustement, c'est que de l'ajustement. »
+                    <span class="author">— Jamel</span>
+                </div>
+                <div class="time-badge">⏱ Temps estimé : 5-15 minutes d'aller-retour</div>
+            </div>
+
+            <!-- STEP 6 -->
+            <div class="step">
+                <div class="step-badge">Étape 6</div>
+                <h3>Upscaler l'image finale</h3>
+                <p>Demande à l'IA d'augmenter la résolution : « augmente la taille de l'image » / « upscale en haute définition ». Ça te permet d'avoir un visuel net pour l'impression ou l'affichage en grand.</p>
+            </div>
+
+            <!-- STEP 7 -->
+            <div class="step">
+                <div class="step-badge">Étape 7</div>
+                <h3>Ajouter un filigrane (pour la prospection)</h3>
+                <p>Mets un petit filigrane avec le nom de ton agence sur tes créations. <strong>Deux raisons :</strong> ça te « brande » (les gens voient ta marque), et ça empêche le client de juste prendre ton design sans te payer.</p>
+                <div class="quote">
+                    « S'il te plaît, mettez un filigrane, pas trop opaque. Vous l'envoyez en DM. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 5 : RÈGLES DESIGN ==================== -->
+        <section class="section reveal" id="rules">
+            <div class="section-header">
+                <div class="section-number">5</div>
+                <h2 class="section-title">Les Règles d'Or du Design de Flyer</h2>
+            </div>
+
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <div class="rule-num">1</div>
+                    <h4>Maximum 3 couleurs</h4>
+                    <p>Utilise des couleurs complémentaires : violet/jaune, orange/bleu, vert/rouge.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">2</div>
+                    <h4>Pas trop de texte</h4>
+                    <p>« Choisir c'est renoncer. Tu peux pas tout mettre dans un flyer. »</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">3</div>
+                    <h4>Offres & prix visibles immédiatement</h4>
+                    <p>Le lecteur doit voir tes prix au premier coup d'œil. « Mettez des prix à la place des phrases. »</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">4</div>
+                    <h4>Le test de la distance</h4>
+                    <p>Si tu ne peux pas lire ton flyer de loin ou rapidement, l'info n'est pas assez visible.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">5</div>
+                    <h4>Pas de pollution visuelle</h4>
+                    <p>Trop de logos, trop de détails = le cerveau n'accroche pas. Épure.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">6</div>
+                    <h4>Les marges</h4>
+                    <p>Laisse de l'espace autour du contenu. Un design sans marges fait amateur.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">7</div>
+                    <h4>Toujours brander avec ta marque</h4>
+                    <p>Mets toujours le nom de ton agence et tes coordonnées. Un flyer sans marque se fait voler.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">8</div>
+                    <h4>Sois agressif sur les prix</h4>
+                    <p>Prix attractifs, bien visibles, structurés en packs.</p>
+                </div>
+                <div class="rule-card">
+                    <div class="rule-num">9</div>
+                    <h4>Moins de 20% de texte</h4>
+                    <p>Règle historique de Facebook Ads, mais reste un excellent repère de design.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 6 : SERVICES ==================== -->
+        <section class="section reveal" id="services">
+            <div class="section-header">
+                <div class="section-number">6</div>
+                <h2 class="section-title">Les Services que tu Peux Vendre</h2>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-item">
+                    <div class="price">30€</div>
+                    <div class="info">
+                        <h4>1 Flyer</h4>
+                        <p>Un visuel simple, généré avec l'IA (prix d'appel)</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">50-75€</div>
+                    <div class="info">
+                        <h4>Pack 3 Flyers</h4>
+                        <p>Trois visuels différents</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">200€</div>
+                    <div class="info">
+                        <h4>Pack 8 Flyers</h4>
+                        <p>Pour les clients qui veulent plus de volume</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">50-100€</div>
+                    <div class="info">
+                        <h4>Flyer Design Premium</h4>
+                        <p>Plus travaillé, plus de retouches</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">300€+</div>
+                    <div class="info">
+                        <h4>Site Web</h4>
+                        <p>Shopify, WordPress, etc.</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">30-50€</div>
+                    <div class="info">
+                        <h4>Carte NFC Google Avis</h4>
+                        <p>Coût d'achat : ~20 centimes la carte</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">15-30€</div>
+                    <div class="info">
+                        <h4>QR Code Design</h4>
+                        <p>QR code stylisé aux couleurs du client</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">50-200€</div>
+                    <div class="info">
+                        <h4>Google My Business</h4>
+                        <p>Création et optimisation de la fiche Google</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">150-200€</div>
+                    <div class="info">
+                        <h4>Menu Restaurant</h4>
+                        <p>Menu complet avec design professionnel</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">20-50€</div>
+                    <div class="info">
+                        <h4>Carte de Visite</h4>
+                        <p>Design de carte de visite pro</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">50€</div>
+                    <div class="info">
+                        <h4>Plaquette Commerciale</h4>
+                        <p>Document présentant les services du client</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">20-50€</div>
+                    <div class="info">
+                        <h4>Facture Design</h4>
+                        <p>Modèle de facture professionnel et esthétique</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">30-50€</div>
+                    <div class="info">
+                        <h4>Photos Produits IA</h4>
+                        <p>Visuels produits générés par IA</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">50-100€</div>
+                    <div class="info">
+                        <h4>Packaging / Mockup</h4>
+                        <p>Mise en scène des produits</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">30-50€</div>
+                    <div class="info">
+                        <h4>Visuel Événementiel</h4>
+                        <p>Soirée, gala, événement spécial</p>
+                    </div>
+                </div>
+                <div class="pricing-item">
+                    <div class="price">30-100€</div>
+                    <div class="info">
+                        <h4>Visuel Publicitaire (Ads)</h4>
+                        <p>Pour campagnes Facebook/Instagram</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 OFFERS STRATEGY -->
+            <h3 style="font-family: 'Space Grotesk', sans-serif; margin: 2rem 0 1rem; font-size: 1.2rem;">💡 La stratégie des 3 offres</h3>
+
+            <div class="offers-row">
+                <div class="offer-card">
+                    <h4>Offre d'Appel</h4>
+                    <div class="offer-price">30€</div>
+                    <div class="offer-desc">1 flyer — Pour accrocher le client</div>
+                </div>
+                <div class="offer-card featured">
+                    <h4>Offre Intermédiaire</h4>
+                    <div class="offer-price">75€</div>
+                    <div class="offer-desc">3 flyers — Meilleur rapport qualité/prix</div>
+                </div>
+                <div class="offer-card">
+                    <h4>Offre Premium</h4>
+                    <div class="offer-price">200€</div>
+                    <div class="offer-desc">8 flyers — Pour les gros volumes</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 7 : OUTILS ==================== -->
+        <section class="section reveal" id="tools">
+            <div class="section-header">
+                <div class="section-number">7</div>
+                <h2 class="section-title">Outils & Ressources</h2>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Designi</h4>
+                    <a href="https://www.designi.com.br" target="_blank">designi.com.br</a>
+                    <div class="tool-price">~2-3€/mois</div>
+                    <div class="tool-desc">Banque de templates design pro. Mots-clés en portugais brésilien ou anglais.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Claude</h4>
+                    <a href="https://claude.ai" target="_blank">claude.ai</a>
+                    <div class="tool-price">Gratuit / Payant</div>
+                    <div class="tool-desc">IA textuelle pour générer les prompts JSON, analyser les images.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Perplexity</h4>
+                    <a href="https://perplexity.ai" target="_blank">perplexity.ai</a>
+                    <div class="tool-price">Gratuit / Payant</div>
+                    <div class="tool-desc">IA textuelle alternative + capable de scraper des infos sur le web.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Gemini (NanoBanana Pro)</h4>
+                    <a href="https://gemini.google.com" target="_blank">gemini.google.com</a>
+                    <div class="tool-price">Gratuit avec limites</div>
+                    <div class="tool-desc">Génération d'images à partir du prompt JSON.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Lovart</h4>
+                    <a href="#" style="color: var(--text-muted);">outil mentionné par Jamel</a>
+                    <div class="tool-price">Payant (tokens)</div>
+                    <div class="tool-desc">Alternative pour la génération d'images, inclut un agent IA derrière.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Instant Data Scraper</h4>
+                    <a href="#" style="color: var(--text-muted);">Extension Chrome</a>
+                    <div class="tool-price">Gratuit</div>
+                    <div class="tool-desc">Scrapper Google Maps pour récupérer les données des commerces.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Pixabay</h4>
+                    <a href="https://pixabay.com" target="_blank">pixabay.com</a>
+                    <div class="tool-price">Gratuit</div>
+                    <div class="tool-desc">Banque d'images classique (qualité inférieure à Designi).</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Alibaba</h4>
+                    <a href="https://alibaba.com" target="_blank">alibaba.com</a>
+                    <div class="tool-price">Variable</div>
+                    <div class="tool-desc">Cartes NFC en gros (~20 centimes la carte).</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Amazon</h4>
+                    <a href="https://amazon.fr" target="_blank">amazon.fr</a>
+                    <div class="tool-price">Variable</div>
+                    <div class="tool-desc">Cartes NFC + machine d'encodage (~35€).</div>
+                </div>
+                <div class="tool-card">
+                    <h4>NFC Tools</h4>
+                    <a href="#" style="color: var(--text-muted);">Application mobile</a>
+                    <div class="tool-price">Gratuit</div>
+                    <div class="tool-desc">Pour programmer les cartes NFC avec le lien Google du client.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>Fiverr / ComeUp</h4>
+                    <a href="https://fiverr.com" target="_blank">fiverr.com</a> · <a href="https://comeup.com" target="_blank">comeup.com</a>
+                    <div class="tool-price">Commissions</div>
+                    <div class="tool-desc">Plateformes pour vendre tes services en ligne.</div>
+                </div>
+                <div class="tool-card">
+                    <h4>QR Code Generator</h4>
+                    <a href="#" style="color: var(--text-muted);">Sites gratuits divers</a>
+                    <div class="tool-price">Gratuit</div>
+                    <div class="tool-desc">Pour générer des QR codes à customiser.</div>
+                </div>
+            </div>
+
+            <div class="alert alert-tip" style="margin-top: 1.5rem;">
+                <strong>💰 CHIFFRE CLÉ</strong>
+                Un flyer généré par IA coûte environ 20-30 centimes en tokens. Tu le vends minimum 30€. La marge est énorme.
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 8 : PROSPECTION ==================== -->
+        <section class="section reveal" id="prospection">
+            <div class="section-header">
+                <div class="section-number">8</div>
+                <h2 class="section-title">La Prospection — Trouver tes Clients</h2>
+            </div>
+
+            <!-- NICHES -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3>Les niches les plus simples pour débuter</h3>
+                <div class="niche-grid">
+                    <span class="niche-tag">🍕 Pizzerias</span>
+                    <span class="niche-tag">💪 Salles de sport</span>
+                    <span class="niche-tag">🍽️ Restaurants</span>
+                    <span class="niche-tag">✂️ Coiffeurs / Barbiers</span>
+                    <span class="niche-tag">🔧 Garages automobiles</span>
+                    <span class="niche-tag">📱 Réparateurs de téléphone</span>
+                    <span class="niche-tag">🍔 Fast-food / Burgers</span>
+                    <span class="niche-tag">☕ Cafés / Coffee shops</span>
+                </div>
+            </div>
+
+            <!-- CANAUX -->
+            <div class="channel">
+                <h4>👻 Canal 1 — Snapchat (story + DM) <span class="channel-tag">Recommandé #1</span></h4>
+                <p>C'est le canal principal recommandé par Jamel. Tu postes ton flyer en story et tu contactes tes amis.</p>
+
+                <div class="alert alert-tip" style="margin-top: 1rem;">
+                    <strong>💡 LA TECHNIQUE DU MESSAGE EN 2 TEMPS</strong>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;"><strong>Message 1 :</strong> « Salut ! Tu vas bien ? Est-ce que je peux te demander quelque chose s'il te plaît ? » → Tu attends sa réponse. La curiosité le fera répondre.</p>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;"><strong>Message 2 :</strong> Tu lui envoies ton flyer + « S'il te plaît, partage mon flyer. Je me suis lancé dans ça. »</p>
+                </div>
+
+                <div class="quote">
+                    « Vous êtes obligés d'avoir 80% des gens qui vont vous partager votre flyer. »
+                    <span class="author">— Jamel</span>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ IMPORTANT</strong>
+                    Ne dis JAMAIS directement « est-ce que tu peux partager mon flyer » dans le premier message. La technique repose sur le fait de créer l'engagement d'abord.
+                </div>
+            </div>
+
+            <div class="channel">
+                <h4>📸 Canal 2 — Instagram (stories + DM)</h4>
+                <p>Même principe : poste en story, DM les commerces directement.</p>
+                <div class="quote">
+                    « DM des garages, DM des petits restaurants, DM des petits trucs. Vous leur proposez toujours du pas cher. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="channel">
+                <h4>📘 Canal 3 — Groupes Facebook</h4>
+                <p>Tape le nom de ta ville ou ton quartier, rejoins tous les groupes (quartier, entraide, commerçants), et poste ton annonce. C'est gratuit. Tu peux adapter ton message : mode humble « Bonjour, j'ai 19 ans, je commence à faire des flyers… » ou mode pro « Notre agence vient d'ouvrir, voici nos services. »</p>
+            </div>
+
+            <div class="channel">
+                <h4>🚶 Canal 4 — Prospection physique (terrain)</h4>
+                <p>Demain, tu sors. Tu vas dans les restaurants, les commerces, les salles de sport. Tu montres tes exemples sur ton téléphone et tu proposes directement.</p>
+                <div class="quote">
+                    « Demain, tout le monde va prospecter dans la rue. Timide, pas timide, etc. Vous y allez. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="channel">
+                <h4>🗺️ Canal 5 — Scrapping Google Maps</h4>
+                <p>Avec l'extension <strong>Instant Data Scraper</strong> sur Chrome :</p>
+                <ol>
+                    <li>Télécharge l'extension</li>
+                    <li>Va sur Google Maps</li>
+                    <li>Tape ta recherche (ex : « pizzeria Nanterre »)</li>
+                    <li>Active l'extension — elle extrait toutes les données</li>
+                    <li>Télécharge le tableau (Excel/CSV)</li>
+                    <li>Tu as maintenant une base de données de prospects !</li>
+                </ol>
+            </div>
+
+            <div class="channel">
+                <h4>💻 Canal 6 — Fiverr / ComeUp</h4>
+                <p>Mets tes services en ligne sur ces plateformes de freelance. Même à 10-20€, ça fait rentrer de l'argent régulièrement.</p>
+            </div>
+
+            <div class="channel">
+                <h4>📩 Canal 7 — WhatsApp / SMS direct</h4>
+                <p>Si tu as récupéré des numéros via le scrapping, envoie un SMS ou un WhatsApp direct avec des exemples de ton travail.</p>
+                <div class="quote">
+                    « Tu envoies des vrais SMS d'assassin. Je fais des flyers 15 euros. Et tu envoies toutes les photos. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <!-- TECHNIQUE ULTIME -->
+            <div class="step" style="margin-top: 2rem;">
+                <div class="step-badge" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.3); color: #f87171;">🔥 Technique Ultime</div>
+                <h3>La prospection par flyer préparé</h3>
+                <ol>
+                    <li>Tu trouves un commerce sur Google ou Instagram (ex : une pizzeria)</li>
+                    <li>Tu prends une capture de leur page/site/photo</li>
+                    <li>Tu génères un <strong>flyer à leur effigie</strong> avec l'IA (coût : 20 centimes)</li>
+                    <li>Tu mets un filigrane avec le nom de ton agence</li>
+                    <li>Tu envoies le flyer au commerce en DM ou en personne</li>
+                    <li>Tu lui dis : « J'ai réalisé ça pour vous. Si ça vous intéresse, je vends des flyers. »</li>
+                </ol>
+                <div class="quote">
+                    « Les gars, je vendais des flyers, pourtant ça nous aura pris 20 centimes à faire, une minute de notre temps. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 9 : VENTE ==================== -->
+        <section class="section reveal" id="vente">
+            <div class="section-header">
+                <div class="section-number">9</div>
+                <h2 class="section-title">La Vente — Comment Closer le Client</h2>
+            </div>
+
+            <div class="funnel">
+                <div class="funnel-step">
+                    <div class="phase">1</div>
+                    <div>
+                        <h4>Accrocher avec le prix d'appel</h4>
+                        <p>« Écoute, je peux te faire un flyer à 30€. »</p>
+                    </div>
+                </div>
+                <div class="funnel-step">
+                    <div class="phase">2</div>
+                    <div>
+                        <h4>Susciter la curiosité avec l'offre supérieure</h4>
+                        <p>« En fait, on a plusieurs qualités. Moi, je fais aussi des flyers design, un peu plus travaillés. C'est plus cher. » → Le client va forcément demander à voir.</p>
+                    </div>
+                </div>
+                <div class="funnel-step">
+                    <div class="phase">3</div>
+                    <div>
+                        <h4>Montrer l'exemple premium</h4>
+                        <p>Envoie un de tes meilleurs designs. Le client va naturellement vouloir le meilleur.</p>
+                    </div>
+                </div>
+                <div class="funnel-step">
+                    <div class="phase">4</div>
+                    <div>
+                        <h4>Proposer le pack</h4>
+                        <p>« Ouais, je fais des packs, mais c'est un peu plus cher. » → Remonte progressivement vers 75€, 200€, puis le site à 300€.</p>
+                    </div>
+                </div>
+                <div class="funnel-step">
+                    <div class="phase">5</div>
+                    <div>
+                        <h4>Jouer la carte du conseil</h4>
+                        <p>« Ton restaurant vend des plats à 30-40€ et tu veux mettre un flyer cheap ? Je te conseille un flyer à 50-100€. Tu as une image de marque devant tes clients. »</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>L'acompte</h3>
+                <p>Toujours demander un <strong>acompte de 50%</strong> avant de commencer le travail.</p>
+            </div>
+
+            <div class="card">
+                <h3>La fidélisation</h3>
+                <p>Un restaurant qui fait des événements toutes les semaines = un nouveau flyer à chaque fois = des <strong>revenus récurrents</strong>. Et quand tu as assez de clients, tu délègues.</p>
+                <div class="quote">
+                    « Tu prends ton petit frère, ton petit cousin, tu lui dis vas-y fais-les, et au final tu fais plus rien. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 10 : NFC ==================== -->
+        <section class="section reveal" id="nfc">
+            <div class="section-header">
+                <div class="section-number">10</div>
+                <h2 class="section-title">Les Cartes NFC Google Avis — Un Service en Or</h2>
+            </div>
+
+            <div class="step">
+                <div class="step-badge" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.3); color: #fbbf24;">💰 Service Ultra-Rentable</div>
+                <h3>Comment ça marche</h3>
+                <p>Une petite carte que le commerce pose sur son comptoir. Le client passe son téléphone dessus → ça ouvre directement la page Google Avis. Plus d'avis = meilleur référencement = plus de clients.</p>
+                <ol>
+                    <li>Achète des cartes NFC vierges sur Amazon ou Alibaba (~20 centimes la carte)</li>
+                    <li>Achète un encodeur NFC ou utilise NFC Tools (app gratuite)</li>
+                    <li>Programme la carte avec le lien Google Avis du client (2 secondes)</li>
+                    <li>Vends le tout <strong>30-50€</strong> au commerce</li>
+                </ol>
+                <div class="quote">
+                    « Vous avez fait peut-être 30-40 euros en 2 secondes et demi. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Google My Business — Un autre service facile</h3>
+                <p>Beaucoup de commerces n'ont même pas de fiche Google My Business. Tu peux leur créer et optimiser pour <strong>50-200€</strong>. Sur Fiverr/ComeUp, ce service se vend entre 37€ et 250$.</p>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 11 : MINDSET ==================== -->
+        <section class="section reveal" id="mindset">
+            <div class="section-header">
+                <div class="section-number">11</div>
+                <h2 class="section-title">Mindset & Coaching — Les Leçons de Jamel</h2>
+            </div>
+
+            <div class="card">
+                <h3>🔥 Le travail, c'est non-négociable</h3>
+                <div class="quote">
+                    « Il y a un vrai problème dans le groupe. Certaines personnes ne bossent pas. Vous êtes là comme un abonnement à la salle : vous payez vos 10€ et vous avez votre conscience. »
+                    <span class="author">— Jamel</span>
+                </div>
+                <div class="quote">
+                    « Soit vous voulez faire de l'oseille, soit vous regardez du foot. Faut faire un choix de vie. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>⏰ L'information avant tout le monde</h3>
+                <div class="quote">
+                    « Vous avez l'information avant tout le monde, avant tous ces gens-là. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🚀 C'est plus facile que jamais</h3>
+                <div class="quote">
+                    « De nos jours, c'est beaucoup plus facile d'accès qu'avant. Avant, je vous assure que c'était très compliqué. Il fallait prendre des compétences. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Ne pas inventer, copier et adapter</h3>
+                <p>Prendre des références existantes (Designi), s'en inspirer et les adapter avec l'IA.</p>
+            </div>
+
+            <div class="card">
+                <h3>🤝 L'esprit d'équipe</h3>
+                <div class="quote">
+                    « 69 personnes qui vont créer des flyers. Si on en fait chacun un, on a 70 flyers à montrer à nos clients. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>💪 L'âge et le budget ne sont pas des freins</h3>
+                <div class="quote">
+                    « Même à 16 ans. Même un mec à zéro sous, il peut le faire. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📈 Déléguer dès que possible</h3>
+                <div class="quote">
+                    « Tu prends ton petit frère, ton petit cousin, tu lui dis vas-y fais-les, et au final tu fais plus rien. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 12 : CHIFFRES ==================== -->
+        <section class="section reveal">
+            <div class="section-header">
+                <div class="section-number">12</div>
+                <h2 class="section-title">Chiffres Clés Récapitulatifs</h2>
+            </div>
+
+            <div class="figures-grid">
+                <div class="figure-card">
+                    <div class="fig-value">~0,20€</div>
+                    <div class="fig-label">Coût de génération d'un flyer</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">2-3€/mois</div>
+                    <div class="fig-label">Abonnement Designi</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">30€</div>
+                    <div class="fig-label">Prix min. de vente d'un flyer</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">75€</div>
+                    <div class="fig-label">Pack 3 flyers</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">200€</div>
+                    <div class="fig-label">Pack 8 flyers</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">300€+</div>
+                    <div class="fig-label">Site web minimum</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">~0,20€</div>
+                    <div class="fig-label">Prix d'achat carte NFC</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">30-50€</div>
+                    <div class="fig-label">Prix de vente carte NFC</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">50-200€</div>
+                    <div class="fig-label">Google My Business</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">150-200€</div>
+                    <div class="fig-label">Menu design restaurant</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">50-150€</div>
+                    <div class="fig-label">Objectif journalier réaliste</div>
+                </div>
+                <div class="figure-card">
+                    <div class="fig-value">1 000€</div>
+                    <div class="fig-label">Dotation challenge affiliation</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 13 : CHECKLIST ==================== -->
+        <section class="section reveal" id="checklist">
+            <div class="section-header">
+                <div class="section-number">13</div>
+                <h2 class="section-title">Checklist d'Action Immédiate</h2>
+            </div>
+
+            <div class="checklist-group">
+                <h4>🌙 CE SOIR</h4>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Crée le nom de ton agence</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Va sur Designi → trouve une image de référence pour ton flyer d'agence</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Va sur Claude → génère le prompt JSON avec tes infos (nom, services, prix, Snap, WhatsApp)</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Va sur Gemini (NanoBanana) → envoie le prompt + l'image de référence → génère ton flyer</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Ajuste le résultat (watermarks, taille textes, couleurs, logo)</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Poste ton flyer en story Snapchat + Instagram</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Envoie le message en 2 temps à TOUS tes contacts Snap</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Génère 2-3 flyers d'exemple pour différentes niches (pizza, coiffeur, salle de sport)</span></div>
+            </div>
+
+            <div class="checklist-group">
+                <h4>☀️ DEMAIN</h4>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Prospection physique : va dans au moins 5 commerces de ta ville</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>DM au moins 10 commerces sur Instagram avec un flyer personnalisé</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Poste dans au moins 3 groupes Facebook de ta ville</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Installe Instant Data Scraper et scrappe les commerces de ta zone</span></div>
+            </div>
+
+            <div class="checklist-group">
+                <h4>📅 CETTE SEMAINE</h4>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Crée un portfolio de 10+ flyers couvrant différentes niches</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Structure tes 3 offres (prix d'appel + intermédiaire + premium)</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Crée ta plaquette de prix — un visuel qui liste tous tes services et prix</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Enregistre-toi sur Fiverr et/ou ComeUp</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Apprends à créer/optimiser une fiche Google My Business</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Commande des cartes NFC (Amazon ou Alibaba)</span></div>
+            </div>
+
+            <div class="checklist-group">
+                <h4>📆 CE MOIS-CI</h4>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Fais tes premières ventes</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Crée ton branding d'agence complet (logo, couleurs, style)</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Augmente progressivement tes prix avec des clients satisfaits</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Fidélise tes clients → services récurrents</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Participe au challenge d'affiliation (1000€ de dotation)</span></div>
+                <div class="checklist-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Délègue tes premières tâches si possible</span></div>
+            </div>
+        </section>
+
+        <!-- ==================== SECTION 14 : FAQ ==================== -->
+        <section class="section reveal" id="faq">
+            <div class="section-header">
+                <div class="section-number">14</div>
+                <h2 class="section-title">FAQ — Questions du Live</h2>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Est-ce qu'on peut utiliser Gemini (NanoBanana) gratuitement ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Oui, Gemini a une version gratuite avec des limites. L'essentiel c'est de commencer — ça coûte quasi rien.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Comment je récupère l'argent si je reçois beaucoup de virements ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Il faut justifier ton activité avec des factures. La solution : fais des factures systématiquement et déclare ton activité.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Comment enlever les watermarks sur les images générées ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Demande simplement à l'IA dans la conversation : « Enlève les filigranes » / « Enlève les watermarks ».</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Est-ce que ça marche aussi avec ChatGPT ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Oui, le principe est le même. Les résultats peuvent varier légèrement entre Claude, Perplexity et ChatGPT, mais la méthode fonctionne avec tous.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>C'est quoi le format idéal pour un flyer Snapchat ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Format 9:16 (vertical). C'est le format stories. Il faut le préciser dans ta demande à l'IA.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Est-ce que les gens voient que c'est fait avec l'IA ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Non. Dans la vraie vie, les gens ne savent pas que c'est fait avec l'IA et fait rapidement. Pour eux, c'est du design professionnel.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+                    <span>Comment upscaler l'image pour l'impression ?</span>
+                    <span class="arrow">▼</span>
+                </div>
+                <div class="faq-a">
+                    <p>Demande à l'IA d'augmenter la résolution. Tu peux aussi utiliser des outils d'upscaling en ligne.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONCLUSION ==================== -->
+        <section class="section reveal">
+            <div class="section-header">
+                <div class="section-number">🎯</div>
+                <h2 class="section-title">Conclusion</h2>
+            </div>
+
+            <div class="step" style="border-color: rgba(139, 92, 246, 0.3);">
+                <h3 style="margin-bottom: 1.5rem;">Récap en 3 points</h3>
+
+                <p style="margin-bottom: 1rem;"><strong style="color: var(--accent-purple-light);">1.</strong> Tu as une méthode complète pour créer des flyers pro en quelques minutes avec l'IA, pour moins de 30 centimes. La chaîne : <strong>Designi</strong> (référence) → <strong>Claude</strong> (prompt JSON) → <strong>Gemini/NanoBanana</strong> (génération) → Ajustements → Vente.</p>
+
+                <p style="margin-bottom: 1rem;"><strong style="color: var(--accent-purple-light);">2.</strong> Tu as une liste de <strong>15+ services</strong> à vendre avec des prix concrets, et tu sais comment trouver tes clients (Snap, Insta, Facebook, terrain, scrapping).</p>
+
+                <p style="margin-bottom: 1.5rem;"><strong style="color: var(--accent-purple-light);">3.</strong> La seule chose qui te sépare de tes premiers euros, c'est de <strong>PASSER À L'ACTION</strong>. Ce soir : flyer + story + messages. Demain : prospection terrain.</p>
+
+                <div class="quote" style="background: rgba(239, 68, 68, 0.06); border-left-color: var(--accent-red);">
+                    « Les gars, il y a tellement aujourd'hui de moyens de faire de l'oseille. Au bout d'un moment, si vous en faites pas, c'est vraiment que c'est vos problèmes. Vous mettez pas le pied à l'étrier, vous avancez pas. Il y a que le travail qui paye. »
+                    <span class="author">— Jamel</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-brand">Groupe Focus</div>
+        <p>Notes prises à partir du live coaching de Jamel</p>
+        <p style="margin-top: 0.3rem;">Spéciale dédicace à Goku 🔥</p>
+    </footer>
+
+    <!-- SCROLL REVEAL SCRIPT -->
+    <script>
+        // Intersection Observer for reveal animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Smooth nav shadow on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
